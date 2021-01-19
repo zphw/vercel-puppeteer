@@ -11,7 +11,11 @@ async function createBrowser() {
 }
 
 async function getContent(url) {
-    const browser = createBrowser();
+    const browser = await puppeteer.launch({
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: chrome.headless
+    });
 
     const page = await browser.newPage();
     await page.goto(url);
@@ -21,7 +25,11 @@ async function getContent(url) {
 }
 
 async function getScreenshot(url, type, quality) {
-    const browser = createBrowser();
+    const browser = await puppeteer.launch({
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: chrome.headless
+    });
 
     const page = await browser.newPage();
     await page.goto(url);
