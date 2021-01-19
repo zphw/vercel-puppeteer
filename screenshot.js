@@ -34,7 +34,6 @@ module.exports = async function (req, res) {
         } else {
             const file = await getScreenshot(url, type, qual, fullPage, viewportWidth, viewportHeight);
             res.statusCode = 200;
-            res.setHeader('Content-Type', `image/${type}`);
             res.end(file);
         }
     } catch (e) {
