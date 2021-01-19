@@ -24,19 +24,20 @@ module.exports = async function (req, res) {
         const { pathname = '/', query = {} } = parse(req.url, true);
         const { act = 'content', type = 'png', quality } = query;
         const url = getUrlFromPath(pathname);
-        const qual = getInt(quality) || 100;
+        const qual = getInt(quality);
 
         if (!isValidUrl(url)) {
             res.statusCode = 400;
             res.setHeader('Content-Type', 'text/html');
             res.end(`<h1>Bad Request</h1><p>The url <em>${url}</em> is not valid.</p>`);
         } else {
+            let output;
             if (act === 'content') {
                 res.setHeader('Content-Type', 'text/plain');
-                const output = await getContent(url);
+                output = await getContent(url);
             } else {
                 res.setHeader('Content-Type', `image/${type}`);
-                const output = await getScreenshot(url, type, qual);
+                output = await getScreenshot(url, type, qual);
             }
             
             res.statusCode = 200;
