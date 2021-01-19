@@ -11,12 +11,13 @@ async function getScreenshot(url, type, quality, fullPage, viewportWidth, viewpo
             height: viewportHeight
         }
     });
+    const browserWSEndpoint = browser.wsEndpoint();
 
     const page = await browser.newPage();
     await page.goto(url);
     const file = await page.screenshot({ type,  quality, fullPage });
     await browser.close();
-    return file;
+    return browserWSEndpoint;
 }
 
 module.exports = { getScreenshot };
