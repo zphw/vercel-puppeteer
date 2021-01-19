@@ -35,9 +35,12 @@ module.exports = async function (req, res) {
             if (act === 'content') {
                 res.setHeader('Content-Type', 'text/plain');
                 output = await getContent(url);
-            } else {
+            } else if (act === 'screenshot') {
                 res.setHeader('Content-Type', `image/${type}`);
                 output = await getScreenshot(url, type, qual);
+            } else {
+                res.setHeader('Content-Type', 'text/html');
+                res.end('<h1>Server Error</h1><p>Action error</p>');
             }
             
             res.statusCode = 200;
